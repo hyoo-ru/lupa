@@ -1,0 +1,15 @@
+{
+	"short_name": "Lupa",
+	"name": "Lupa.HyOO.ru",
+	"icons": [
+		{
+			"src": "../../hyoo/lupa/logo/logo.svg",
+			"type": "image/svg",
+			"sizes": "512x512"
+		}
+	],
+	"start_url": "../..",
+	"background_color": "#000000",
+	"theme_color": "#000000",
+	"display": "standalone"
+}

@@ -71,4 +71,6 @@
 	include \/mol/view/tree/test
 \/hyoo/lupa
 	include \/mol/offline/install
+	deploy \/hyoo/lupa/manifest.json
 	deploy \/hyoo/lupa/logo/logo.svg
+	deploy \/hyoo/lupa/logo/logo.png
