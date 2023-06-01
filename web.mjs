@@ -2687,13 +2687,7 @@ var $;
         }
         video_constraints() {
             return {
-                facingMode: this.facing(),
-                width: {
-                    min: this.width_min()
-                },
-                height: {
-                    min: this.height_min()
-                }
+                facingMode: this.facing()
             };
         }
         video_settings() {
@@ -2705,16 +2699,8 @@ var $;
                 colorTemperature: this.temperature()
             };
         }
-        facing(next) {
-            if (next !== undefined)
-                return next;
+        facing() {
             return "user";
-        }
-        width_min() {
-            return 720;
-        }
-        height_min() {
-            return 720;
         }
         brightness() {
             return 128;
@@ -2732,9 +2718,6 @@ var $;
             return 4000;
         }
     }
-    __decorate([
-        $mol_mem
-    ], $mol_video_camera.prototype, "facing", null);
     $.$mol_video_camera = $mol_video_camera;
 })($ || ($ = {}));
 //mol/video/camera/-view.tree/camera.view.tree.ts
@@ -2771,9 +2754,6 @@ var $;
     var $$;
     (function ($$) {
         class $mol_video_camera extends $.$mol_video_camera {
-            facing(next = 'user') {
-                return next;
-            }
             stream_raw() {
                 const stream = $mol_wire_sync(navigator.mediaDevices).getUserMedia({
                     video: this.video_constraints(),
@@ -2791,9 +2771,6 @@ var $;
                 return stream;
             }
         }
-        __decorate([
-            $mol_mem
-        ], $mol_video_camera.prototype, "facing", null);
         __decorate([
             $mol_mem
         ], $mol_video_camera.prototype, "stream_raw", null);

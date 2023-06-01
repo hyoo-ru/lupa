@@ -690,9 +690,7 @@ declare namespace $ {
         controls(): boolean;
         video_constraints(): Record<string, any>;
         video_settings(): Record<string, any>;
-        facing(next?: any): string;
-        width_min(): number;
-        height_min(): number;
+        facing(): string;
         brightness(): number;
         sharpness(): number;
         contrast(): number;
@@ -707,7 +705,6 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_video_camera extends $.$mol_video_camera {
-        facing(next?: "user" | "environment"): "user" | "environment";
         stream_raw(): MediaStream & {
             destructor: () => void;
         };
