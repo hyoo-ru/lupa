@@ -4687,6 +4687,13 @@ var $;
             const obj = new this.$.$mol_video_camera();
             obj.title = () => "$hyoo_lupa - PWA Magnifying Glass";
             obj.facing = () => "environment";
+            obj.video_settings = () => ({
+                advanced: [
+                    {
+                        torch: true
+                    }
+                ]
+            });
             return obj;
         }
         Source() {
