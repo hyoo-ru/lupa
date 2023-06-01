@@ -4696,11 +4696,7 @@ var $;
             obj.title = () => "$hyoo_lupa - PWA Magnifying Glass";
             obj.facing = () => "environment";
             obj.video_settings = () => ({
-                advanced: [
-                    {
-                        torch: true
-                    }
-                ]
+                torch: true
             });
             return obj;
         }
