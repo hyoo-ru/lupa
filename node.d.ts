@@ -838,6 +838,7 @@ declare namespace $ {
         contrast(): number;
         saturation(): number;
         temperature(): number;
+        torch(): boolean;
     }
 }
 

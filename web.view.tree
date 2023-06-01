@@ -32,6 +32,9 @@ $mol_video_camera $mol_video_player
 		contrast <= contrast 32
 		saturation <= saturation 64
 		colorTemperature <= temperature 4000
+		advanced /
+			* torch <= torch true
+
 
 $mol_link $mol_view
 	uri \
@@ -91,7 +94,6 @@ $hyoo_lupa $mol_stack
 		<= Camera $mol_video_camera
 			title \$hyoo_lupa - PWA Magnifying Glass
 			facing \environment
-			video_settings *
-				torch true
+			torch true
 		<= Source $mol_link_source
 			uri \https://github.com/hyoo-ru/lupa.hyoo.ru/

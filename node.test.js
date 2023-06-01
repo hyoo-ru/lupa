@@ -3201,7 +3201,12 @@ var $;
                 sharpness: this.sharpness(),
                 contrast: this.contrast(),
                 saturation: this.saturation(),
-                colorTemperature: this.temperature()
+                colorTemperature: this.temperature(),
+                advanced: [
+                    {
+                        torch: this.torch()
+                    }
+                ]
             };
         }
         facing() {
@@ -3221,6 +3226,9 @@ var $;
         }
         temperature() {
             return 4000;
+        }
+        torch() {
+            return true;
         }
     }
     $.$mol_video_camera = $mol_video_camera;
@@ -3271,7 +3279,14 @@ var $;
                 const settings = this.video_settings();
                 const stream = this.stream_raw();
                 for (const track of stream.getVideoTracks()) {
-                    track.applyConstraints(settings);
+                    for (const param in settings) {
+                        try {
+                            track.applyConstraints({ [param]: settings[param] });
+                        }
+                        catch (error) {
+                            $mol_fail_log(error);
+                        }
+                    }
                 }
                 return stream;
             }
@@ -4687,9 +4702,7 @@ var $;
             const obj = new this.$.$mol_video_camera();
             obj.title = () => "$hyoo_lupa - PWA Magnifying Glass";
             obj.facing = () => "environment";
-            obj.video_settings = () => ({
-                torch: true
-            });
+            obj.torch = () => true;
             return obj;
         }
         Source() {
