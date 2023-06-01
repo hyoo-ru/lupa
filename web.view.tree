@@ -1,0 +1,31 @@
+$mol_video_player $mol_view
+	dom_name \video
+	playing?val false
+	volume?val 0
+	time?val 0
+	duration 0
+	attr *
+		src <= uri \
+		controls <= controls true
+		autoplay <= autoplay true
+		loop <= loop false
+		poster <= poster \
+	field *
+		srcObject <= stream null
+	event *
+		volumechange?event <=> revolume?event null
+		timeupdate?event <=> retime?event null
+		durationchange?event <=> redurate?event null
+		playing?event <=> play_started?event null
+		play?event <=> play?event null
+		pause?event <=> pause?event null
+
+$mol_video_camera $mol_video_player
+	facing? \user
+	controls false
+
+$hyoo_lupa $mol_view
+	sub /
+		<= Camera $mol_video_camera
+			title \$hyoo_lupa - PWA Magnifying Glass
+			facing \environment
