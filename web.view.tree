@@ -31,7 +31,7 @@ $mol_video_camera $mol_video_player
 		height * ideal <= height <= size
 	video_settings *
 		brightness <= brightness 128
-		sharpness <= sharpness 3
+		sharpness <= sharpness 2
 		contrast <= contrast 32
 		saturation <= saturation 64
 		advanced /
@@ -97,6 +97,7 @@ $hyoo_lupa $mol_stack
 		<= Camera $mol_video_camera
 			title \$hyoo_lupa - PWA Magnifying Glass
 			facing \environment
+			sharpness 4
 			torch true
 		<= Source $mol_link_source
 			uri \https://github.com/hyoo-ru/lupa.hyoo.ru/

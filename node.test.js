@@ -3237,7 +3237,7 @@ var $;
             return 128;
         }
         sharpness() {
-            return 3;
+            return 2;
         }
         contrast() {
             return 32;
@@ -4738,6 +4738,7 @@ var $;
             const obj = new this.$.$mol_video_camera();
             obj.title = () => "$hyoo_lupa - PWA Magnifying Glass";
             obj.facing = () => "environment";
+            obj.sharpness = () => 4;
             obj.torch = () => true;
             return obj;
         }
