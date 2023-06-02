@@ -833,6 +833,10 @@ declare namespace $ {
         video_constraints(): Record<string, any>;
         video_settings(): Record<string, any>;
         facing(): string;
+        aspect(): number;
+        size(): number;
+        width(): number;
+        height(): number;
         brightness(): number;
         sharpness(): number;
         contrast(): number;
@@ -854,6 +858,7 @@ declare namespace $.$$ {
         stream(): MediaStream & {
             destructor: () => void;
         };
+        dom_node_actual(): HTMLVideoElement;
     }
 }
 

@@ -3200,7 +3200,14 @@ var $;
         }
         video_constraints() {
             return {
-                facingMode: this.facing()
+                facingMode: this.facing(),
+                aspectRatio: this.aspect(),
+                width: {
+                    ideal: this.width()
+                },
+                height: {
+                    ideal: this.height()
+                }
             };
         }
         video_settings() {
@@ -3221,6 +3228,18 @@ var $;
         }
         facing() {
             return "user";
+        }
+        aspect() {
+            return 1;
+        }
+        size() {
+            return 720;
+        }
+        width() {
+            return this.size();
+        }
+        height() {
+            return this.size();
         }
         brightness() {
             return 128;
@@ -3311,6 +3330,9 @@ var $;
                     }
                 }
                 return stream;
+            }
+            dom_node_actual() {
+                return super.dom_node_actual();
             }
         }
         __decorate([
@@ -4760,6 +4782,5 @@ var $;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //hyoo/lupa/lupa.view.css.ts
-;
-export default $
-//# sourceMappingURL=node.mjs.map
+
+//# sourceMappingURL=node.js.map
