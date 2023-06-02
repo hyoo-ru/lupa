@@ -3209,8 +3209,10 @@ var $;
                 sharpness: this.sharpness(),
                 contrast: this.contrast(),
                 saturation: this.saturation(),
-                colorTemperature: this.temperature(),
                 advanced: [
+                    {
+                        colorTemperature: this.temperature()
+                    },
                     {
                         torch: this.torch()
                     }
@@ -3288,11 +3290,23 @@ var $;
                 const stream = this.stream_raw();
                 for (const track of stream.getVideoTracks()) {
                     for (const param in settings) {
-                        try {
-                            track.applyConstraints({ [param]: settings[param] });
+                        if (param === 'advanced') {
+                            for (const constraint of settings.advanced) {
+                                try {
+                                    track.applyConstraints({ advanced: [constraint] });
+                                }
+                                catch (error) {
+                                    $mol_fail_log(error);
+                                }
+                            }
                         }
-                        catch (error) {
-                            $mol_fail_log(error);
+                        else if (settings[param] !== null) {
+                            try {
+                                track.applyConstraints({ [param]: settings[param] });
+                            }
+                            catch (error) {
+                                $mol_fail_log(error);
+                            }
                         }
                     }
                 }
