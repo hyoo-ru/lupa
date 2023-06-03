@@ -98,6 +98,7 @@ $hyoo_lupa $mol_stack
 			title \$hyoo_lupa - PWA Magnifying Glass
 			facing \environment
 			size null
+			aspect null
 			sharpness 4
 			torch true
 		<= Source $mol_link_source

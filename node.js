@@ -4747,6 +4747,7 @@ var $;
             obj.title = () => "$hyoo_lupa - PWA Magnifying Glass";
             obj.facing = () => "environment";
             obj.size = () => null;
+            obj.aspect = () => null;
             obj.sharpness = () => 4;
             obj.torch = () => true;
             return obj;
