@@ -3008,6 +3008,7 @@ var $;
                 src: this.uri(),
                 controls: this.controls(),
                 autoplay: this.autoplay(),
+                playsinline: this.inline(),
                 loop: this.loop(),
                 poster: this.poster()
             };
@@ -3034,6 +3035,9 @@ var $;
             return true;
         }
         autoplay() {
+            return true;
+        }
+        inline() {
             return true;
         }
         loop() {
