@@ -1309,7 +1309,6 @@ declare namespace $ {
 declare namespace $ {
     class $hyoo_lupa extends $mol_stack {
         sub(): readonly any[];
-        facing(): string;
         Camera(): $$.$mol_video_camera;
         Source(): $mol_link_source;
     }
