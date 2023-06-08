@@ -4768,7 +4768,6 @@ var $;
             obj.facing = () => "environment";
             obj.sharpness = () => 4;
             obj.torch = () => true;
-            obj.video_constraints = () => ({});
             return obj;
         }
         Source() {

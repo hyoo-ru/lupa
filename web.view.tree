@@ -102,6 +102,5 @@ $hyoo_lupa $mol_stack
 			facing \environment
 			sharpness 4
 			torch true
-			video_constraints *
 		<= Source $mol_link_source
 			uri \https://github.com/hyoo-ru/lupa.hyoo.ru/
