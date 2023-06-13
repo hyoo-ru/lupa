@@ -4273,4 +4273,5 @@ var $;
 })($ || ($ = {}));
 //hyoo/lupa/lupa.view.css.ts
 
+export default $
 //# sourceMappingURL=web.js.map
