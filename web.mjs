@@ -2533,19 +2533,19 @@ var $;
         dom_name() {
             return "video";
         }
-        playing(val) {
-            if (val !== undefined)
-                return val;
+        playing(next) {
+            if (next !== undefined)
+                return next;
             return false;
         }
-        volume(val) {
-            if (val !== undefined)
-                return val;
+        volume(next) {
+            if (next !== undefined)
+                return next;
             return 0;
         }
-        time(val) {
-            if (val !== undefined)
-                return val;
+        time(next) {
+            if (next !== undefined)
+                return next;
             return 0;
         }
         duration() {

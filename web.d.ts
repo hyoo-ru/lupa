@@ -812,9 +812,9 @@ declare namespace $ {
 declare namespace $ {
     class $mol_video_player extends $mol_view {
         dom_name(): string;
-        playing(val?: any): boolean;
-        volume(val?: any): number;
-        time(val?: any): number;
+        playing(next?: any): boolean;
+        volume(next?: any): number;
+        time(next?: any): number;
         duration(): number;
         attr(): Record<string, any>;
         field(): Record<string, any>;
