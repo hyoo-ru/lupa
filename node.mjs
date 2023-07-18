@@ -225,30 +225,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_after_tick extends $mol_object2 {
-        task;
-        promise;
-        cancelled = false;
-        constructor(task) {
-            super();
-            this.task = task;
-            this.promise = Promise.resolve().then(() => {
-                if (this.cancelled)
-                    return;
-                task();
-            });
-        }
-        destructor() {
-            this.cancelled = true;
-        }
-    }
-    $.$mol_after_tick = $mol_after_tick;
-})($ || ($ = {}));
-//mol/after/tick/tick.ts
-;
-"use strict";
-var $;
-(function ($) {
 })($ || ($ = {}));
 //mol/dom/context/context.ts
 ;
@@ -861,6 +837,50 @@ var $;
     $.$mol_dom_context = new $node.jsdom.JSDOM('', { url: 'https://localhost/' }).window;
 })($ || ($ = {}));
 //mol/dom/context/context.node.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_vk extends $mol_object2 {
+        static init() {
+            this.send('VKWebAppInit');
+        }
+        static send(handler, params = {}) {
+            const glob = $mol_dom_context;
+            glob.androidBridge?.[handler](JSON.stringify(params));
+            glob.iosBridge?.[handler].postMessage(params);
+            glob.ReactNativeWebView?.postMessage({ handler, params });
+            glob.parent.postMessage({ handler, params, type: 'vk-connect' }, '*');
+        }
+    }
+    $.$mol_vk = $mol_vk;
+    setTimeout(() => $mol_vk.init());
+})($ || ($ = {}));
+//mol/vk/vk.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_after_tick extends $mol_object2 {
+        task;
+        promise;
+        cancelled = false;
+        constructor(task) {
+            super();
+            this.task = task;
+            this.promise = Promise.resolve().then(() => {
+                if (this.cancelled)
+                    return;
+                task();
+            });
+        }
+        destructor() {
+            this.cancelled = true;
+        }
+    }
+    $.$mol_after_tick = $mol_after_tick;
+})($ || ($ = {}));
+//mol/after/tick/tick.ts
 ;
 "use strict";
 var $;
