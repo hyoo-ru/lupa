@@ -294,7 +294,7 @@ var $;
             glob.AndroidBridge?.[handler](JSON.stringify(params));
             glob.webkit?.messageHandlers?.[handler].postMessage(params);
             glob.ReactNativeWebView?.postMessage({ handler, params });
-            glob.parent.postMessage({ handler, params, type: 'vk-connect' }, '*');
+            glob.parent?.postMessage({ handler, params, type: 'vk-connect' }, '*');
         }
     }
     $.$mol_vk = $mol_vk;
