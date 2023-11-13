@@ -1020,17 +1020,8 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    let $mol_mem_cached: typeof $mol_wire_probe;
-}
-
-declare namespace $ {
     class $mol_storage extends $mol_object2 {
-        static native(): {
-            estimate: () => StorageEstimate;
-            getDirectory: () => FileSystemDirectoryHandle;
-            persist: () => boolean;
-            persisted: () => boolean;
-        };
+        static native(): StorageManager;
         static persisted(next?: boolean): boolean;
         static estimate(): StorageEstimate;
         static dir(): FileSystemDirectoryHandle;
