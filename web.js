@@ -34,6 +34,62 @@ $.$$ = $
 "use strict";
 var $;
 (function ($) {
+    function $mol_log3_area_lazy(event) {
+        const self = this;
+        const stack = self.$mol_log3_stack;
+        const deep = stack.length;
+        let logged = false;
+        stack.push(() => {
+            logged = true;
+            self.$mol_log3_area.call(self, event);
+        });
+        return () => {
+            if (logged)
+                self.console.groupEnd();
+            if (stack.length > deep)
+                stack.length = deep;
+        };
+    }
+    $.$mol_log3_area_lazy = $mol_log3_area_lazy;
+    $.$mol_log3_stack = [];
+})($ || ($ = {}));
+//mol/log3/log3.ts
+;
+"use strict";
+//mol/type/keys/extract/extract.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_log3_web_make(level, color) {
+        return function $mol_log3_logger(event) {
+            const pending = this.$mol_log3_stack.pop();
+            if (pending)
+                pending();
+            let tpl = '%c';
+            const chunks = Object.values(event);
+            for (let i = 0; i < chunks.length; ++i) {
+                tpl += (typeof chunks[i] === 'string') ? ' ▫ %s' : ' ▫ %o';
+            }
+            const style = `color:${color};font-weight:bolder`;
+            this.console[level](tpl, style, ...chunks);
+            const self = this;
+            return () => self.console.groupEnd();
+        };
+    }
+    $.$mol_log3_web_make = $mol_log3_web_make;
+    $.$mol_log3_come = $mol_log3_web_make('info', 'royalblue');
+    $.$mol_log3_done = $mol_log3_web_make('info', 'forestgreen');
+    $.$mol_log3_fail = $mol_log3_web_make('error', 'orangered');
+    $.$mol_log3_warn = $mol_log3_web_make('warn', 'goldenrod');
+    $.$mol_log3_rise = $mol_log3_web_make('log', 'magenta');
+    $.$mol_log3_area = $mol_log3_web_make('group', 'cyan');
+})($ || ($ = {}));
+//mol/log3/log3.web.ts
+;
+"use strict";
+var $;
+(function ($) {
     const blacklist = new Set([
         '//cse.google.com/adsense/search/async-ads.js'
     ]);
@@ -47,7 +103,10 @@ var $;
                 caches.delete('v1');
                 caches.delete('$mol_offline');
                 self.clients.claim();
-                console.info('$mol_offline activated');
+                $$.$mol_log3_done({
+                    place: '$mol_offline',
+                    message: 'Activated',
+                });
             });
             self.addEventListener('fetch', (event) => {
                 const request = event.request;
@@ -1226,62 +1285,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_log3_area_lazy(event) {
-        const self = this;
-        const stack = self.$mol_log3_stack;
-        const deep = stack.length;
-        let logged = false;
-        stack.push(() => {
-            logged = true;
-            self.$mol_log3_area.call(self, event);
-        });
-        return () => {
-            if (logged)
-                self.console.groupEnd();
-            if (stack.length > deep)
-                stack.length = deep;
-        };
-    }
-    $.$mol_log3_area_lazy = $mol_log3_area_lazy;
-    $.$mol_log3_stack = [];
-})($ || ($ = {}));
-//mol/log3/log3.ts
-;
-"use strict";
-//mol/type/keys/extract/extract.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_log3_web_make(level, color) {
-        return function $mol_log3_logger(event) {
-            const pending = this.$mol_log3_stack.pop();
-            if (pending)
-                pending();
-            let tpl = '%c';
-            const chunks = Object.values(event);
-            for (let i = 0; i < chunks.length; ++i) {
-                tpl += (typeof chunks[i] === 'string') ? ' ▫ %s' : ' ▫ %o';
-            }
-            const style = `color:${color};font-weight:bolder`;
-            this.console[level](tpl, style, ...chunks);
-            const self = this;
-            return () => self.console.groupEnd();
-        };
-    }
-    $.$mol_log3_web_make = $mol_log3_web_make;
-    $.$mol_log3_come = $mol_log3_web_make('info', 'royalblue');
-    $.$mol_log3_done = $mol_log3_web_make('info', 'forestgreen');
-    $.$mol_log3_fail = $mol_log3_web_make('error', 'orangered');
-    $.$mol_log3_warn = $mol_log3_web_make('warn', 'goldenrod');
-    $.$mol_log3_rise = $mol_log3_web_make('log', 'magenta');
-    $.$mol_log3_area = $mol_log3_web_make('group', 'cyan');
-})($ || ($ = {}));
-//mol/log3/log3.web.ts
-;
-"use strict";
-var $;
-(function ($) {
     class $mol_wire_task extends $mol_wire_fiber {
         static getter(task) {
             return function $mol_wire_task_get(host, args) {
@@ -1814,7 +1817,9 @@ var $;
 var $;
 (function ($) {
     function $mol_wire_solid() {
-        const current = $mol_wire_auto();
+        let current = $mol_wire_auto();
+        if (current.temp)
+            current = current.host;
         if (current.reap !== nothing) {
             current?.sub_on(sub, sub.data.length);
         }
@@ -3357,6 +3362,13 @@ var $;
                         rules.push(`${key} ${query} {\n`);
                     }
                 }
+                else if (key[0] === '[' && key[key.length - 1] === ']') {
+                    const attr = key.slice(1, -1);
+                    const vals = config[key];
+                    for (let val in vals) {
+                        make_class(selector(prefix, path) + ':where([' + attr + '=' + JSON.stringify(val) + '])', [], vals[val]);
+                    }
+                }
                 else {
                     make_class(selector(prefix, path) + key, [], config[key]);
                 }
@@ -3539,7 +3551,7 @@ var $;
                 native.persist().then(actual => {
                     setTimeout(() => this.persisted(actual, 'cache'), 5000);
                     if (actual)
-                        this.$.$mol_log3_rise({ place: `$mol_storage`, message: `Persist: Yes` });
+                        this.$.$mol_log3_done({ place: `$mol_storage`, message: `Persist: Yes` });
                     else
                         this.$.$mol_log3_fail({ place: `$mol_storage`, message: `Persist: No` });
                 });
@@ -4033,103 +4045,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_huggingface_run(space, method, ...data) {
-        while (true) {
-            try {
-                if (typeof method === 'number') {
-                    return $mol_wire_sync(this).$mol_huggingface_ws(space, method, ...data);
-                }
-                else {
-                    return this.$mol_huggingface_rest(space, method, ...data);
-                }
-            }
-            catch (error) {
-                if ($mol_promise_like(error))
-                    $mol_fail_hidden(error);
-                if (error instanceof Error && error.message === `Queue full`) {
-                    $mol_fail_log(error);
-                    continue;
-                }
-                $mol_fail_hidden(error);
-            }
-        }
-    }
-    $.$mol_huggingface_run = $mol_huggingface_run;
-    function $mol_huggingface_rest(space, method, ...data) {
-        const uri = `https://${space}.hf.space/run/${method}`;
-        const response = $mol_fetch.json(uri, {
-            method: 'post',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ data }),
-        });
-        if ('error' in response) {
-            $mol_fail(new Error(response.error ?? 'Unknown API error'));
-        }
-        return response.data;
-    }
-    $.$mol_huggingface_rest = $mol_huggingface_rest;
-    function $mol_huggingface_ws(space, fn_index, ...data) {
-        const session_hash = $mol_guid();
-        const socket = new WebSocket(`wss://${space}.hf.space/queue/join`);
-        const promise = new Promise((done, fail) => {
-            socket.onclose = event => {
-                if (event.reason)
-                    fail(new Error(event.reason));
-            };
-            socket.onerror = event => {
-                fail(new Error(`Socket error`));
-            };
-            socket.onmessage = event => {
-                const message = JSON.parse(event.data);
-                switch (message.msg) {
-                    case 'send_hash':
-                        return socket.send(JSON.stringify({ session_hash, fn_index }));
-                    case 'estimation': return;
-                    case 'queue_full':
-                        fail(new Error(`Queue full`));
-                    case 'send_data':
-                        return socket.send(JSON.stringify({ session_hash, fn_index, data }));
-                    case 'process_starts': return;
-                    case 'process_completed':
-                        if (message.success) {
-                            return done(message.output.data);
-                        }
-                        else {
-                            return fail(new Error(message.output.error ?? `Unknown API error`));
-                        }
-                    default:
-                        return fail(new Error(`Unknown message type: ${message.msg}`));
-                }
-            };
-        });
-        return Object.assign(promise, {
-            destructor: () => socket.close()
-        });
-    }
-    $.$mol_huggingface_ws = $mol_huggingface_ws;
-})($ || ($ = {}));
-//mol/huggingface/huggingface.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $hyoo_lingua_translate(lang, text) {
-        if (!text.trim())
-            return '';
-        const cache_key = `$hyoo_lingua_translate(${JSON.stringify(lang)},${JSON.stringify(text)})`;
-        const cached = this.$mol_state_local.value(cache_key);
-        if (cached)
-            return String(cached);
-        const translated = this.$mol_huggingface_run('hyoo-translate', 0, lang, text)[0];
-        return this.$mol_state_local.value(cache_key, translated);
-    }
-    $.$hyoo_lingua_translate = $hyoo_lingua_translate;
-})($ || ($ = {}));
-//hyoo/lingua/translate/translate.ts
-;
-"use strict";
-var $;
-(function ($) {
     class $mol_locale extends $mol_object {
         static lang_default() {
             return 'en';
@@ -4164,12 +4079,6 @@ var $;
             const en = this.texts('en')[key];
             if (!en)
                 return key;
-            try {
-                return $mol_wire_sync($hyoo_lingua_translate).call(this.$, lang, en);
-            }
-            catch (error) {
-                $mol_fail_log(error);
-            }
             return en;
         }
         static warn(key) {
