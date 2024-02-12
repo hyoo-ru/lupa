@@ -175,6 +175,10 @@ declare namespace $ {
         insert(value: $mol_tree2 | null, ...path: $mol_tree2_path): $mol_tree2;
         select(...path: $mol_tree2_path): $mol_tree2;
         filter(path: string[], value?: string): $mol_tree2;
+        hack_self<Context extends {
+            span?: $mol_span;
+            [key: string]: unknown;
+        } = {}>(belt: $mol_tree2_belt<Context>, context?: Context): readonly $mol_tree2[];
         hack<Context extends {
             span?: $mol_span;
             [key: string]: unknown;
@@ -628,7 +632,7 @@ declare namespace $ {
     type $mol_style_unit_angle = 'deg' | 'rad' | 'grad' | 'turn';
     type $mol_style_unit_time = 's' | 'ms';
     type $mol_style_unit_any = $mol_style_unit_length | $mol_style_unit_angle | $mol_style_unit_time;
-    type $mol_style_unit_str<Quanity extends $mol_style_unit_any> = `${number}${Quanity}`;
+    type $mol_style_unit_str<Quanity extends $mol_style_unit_any = $mol_style_unit_any> = `${number}${Quanity}`;
     class $mol_style_unit<Literal extends $mol_style_unit_any> extends $mol_decor<number> {
         readonly literal: Literal;
         constructor(value: number, literal: Literal);
@@ -753,9 +757,9 @@ declare namespace $ {
         all?: Common;
         animation?: {
             composition?: Single_animation_composition | Single_animation_composition[][] | Common;
-            delay?: $mol_style_unit<$mol_style_unit_time> | $mol_style_unit<$mol_style_unit_time>[][] | Common;
+            delay?: $mol_style_unit_str<$mol_style_unit_time> | $mol_style_unit_str<$mol_style_unit_time>[][] | Common;
             direction?: Single_animation_direction | Single_animation_direction[][] | Common;
-            duration?: $mol_style_unit<$mol_style_unit_time> | $mol_style_unit<$mol_style_unit_time>[][] | Common;
+            duration?: $mol_style_unit_str<$mol_style_unit_time> | $mol_style_unit_str<$mol_style_unit_time>[][] | Common;
             fillMode?: Single_animation_fill_mode | Single_animation_fill_mode[][] | Common;
             iterationCount?: Single_animation_iteration_count | Single_animation_iteration_count[][] | Common;
             name?: 'none' | string & {} | ('none' | string & {})[][] | Common;
@@ -949,39 +953,61 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_stack extends $mol_view {
-    }
 }
 
 declare namespace $ {
+
+	export class $mol_stack extends $mol_view {
+	}
+	
 }
 
+//# sourceMappingURL=stack.view.tree.d.ts.map
 declare namespace $ {
-    class $mol_video_player extends $mol_view {
-        dom_name(): string;
-        playing(next?: any): boolean;
-        volume(next?: any): number;
-        time(next?: any): number;
-        duration(): number;
-        attr(): Record<string, any>;
-        field(): Record<string, any>;
-        event(): Record<string, any>;
-        uri(): string;
-        controls(): boolean;
-        autoplay(): boolean;
-        inline(): boolean;
-        loop(): boolean;
-        poster(): string;
-        stream(): any;
-        revolume(event?: any): any;
-        retime(event?: any): any;
-        redurate(event?: any): any;
-        play_started(event?: any): any;
-        play(event?: any): any;
-        pause(event?: any): any;
-    }
+
+	export class $mol_video_player extends $mol_view {
+		dom_name( ): string
+		playing( next?: boolean ): boolean
+		volume( next?: number ): number
+		time( next?: number ): number
+		duration( ): number
+		attr( ): ({ 
+			'src': ReturnType< $mol_video_player['uri'] >,
+			'controls': ReturnType< $mol_video_player['controls'] >,
+			'autoplay': ReturnType< $mol_video_player['autoplay'] >,
+			'playsinline': ReturnType< $mol_video_player['inline'] >,
+			'loop': ReturnType< $mol_video_player['loop'] >,
+			'poster': ReturnType< $mol_video_player['poster'] >,
+		}) 
+		field( ): ({ 
+			'srcObject': ReturnType< $mol_video_player['stream'] >,
+		}) 
+		event( ): ({ 
+			volumechange( next?: ReturnType< $mol_video_player['revolume'] > ): ReturnType< $mol_video_player['revolume'] >,
+			timeupdate( next?: ReturnType< $mol_video_player['retime'] > ): ReturnType< $mol_video_player['retime'] >,
+			durationchange( next?: ReturnType< $mol_video_player['redurate'] > ): ReturnType< $mol_video_player['redurate'] >,
+			playing( next?: ReturnType< $mol_video_player['play_started'] > ): ReturnType< $mol_video_player['play_started'] >,
+			play( next?: ReturnType< $mol_video_player['play'] > ): ReturnType< $mol_video_player['play'] >,
+			pause( next?: ReturnType< $mol_video_player['pause'] > ): ReturnType< $mol_video_player['pause'] >,
+		}) 
+		uri( ): string
+		controls( ): boolean
+		autoplay( ): boolean
+		inline( ): boolean
+		loop( ): boolean
+		poster( ): string
+		stream( ): any
+		revolume( next?: any ): any
+		retime( next?: any ): any
+		redurate( next?: any ): any
+		play_started( next?: any ): any
+		play( next?: any ): any
+		pause( next?: any ): any
+	}
+	
 }
 
+//# sourceMappingURL=player.view.tree.d.ts.map
 declare namespace $.$$ {
     class $mol_video_player extends $.$mol_video_player {
         dom_node(): HTMLVideoElement;
@@ -998,27 +1024,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_video_camera extends $mol_video_player {
-        controls(): boolean;
-        style(): Record<string, any>;
-        video_constraints(): Record<string, any>;
-        video_settings(): Record<string, any>;
-        transform(): string;
-        facing(): string;
-        aspect(): number;
-        size(): number;
-        width(): number;
-        height(): number;
-        brightness(): number;
-        sharpness(): number;
-        contrast(): number;
-        saturation(): number;
-        temperature(): number;
-        torch(): boolean;
-    }
-}
-
-declare namespace $ {
     export function $mol_wire_sync<Host extends object>(obj: Host): ObjectOrFunctionResultAwaited<Host>;
     type FunctionResultAwaited<Some> = Some extends (...args: infer Args) => infer Res ? (...args: Args) => Awaited<Res> : Some;
     type MethodsResultAwaited<Host extends Object> = {
@@ -1028,6 +1033,47 @@ declare namespace $ {
     export {};
 }
 
+declare namespace $ {
+
+	export class $mol_video_camera extends $mol_video_player {
+		controls( ): boolean
+		style( ): ({ 
+			'transform': ReturnType< $mol_video_camera['transform'] >,
+		}) 
+		video_constraints( ): ({ 
+			'facingMode': ReturnType< $mol_video_camera['facing'] >,
+			'aspectRatio': ReturnType< $mol_video_camera['aspect'] >,
+			'width': ({ 
+				'ideal': ReturnType< $mol_video_camera['width'] >,
+			}) ,
+			'height': ({ 
+				'ideal': ReturnType< $mol_video_camera['height'] >,
+			}) ,
+		}) 
+		video_settings( ): ({ 
+			'brightness': ReturnType< $mol_video_camera['brightness'] >,
+			'sharpness': ReturnType< $mol_video_camera['sharpness'] >,
+			'contrast': ReturnType< $mol_video_camera['contrast'] >,
+			'saturation': ReturnType< $mol_video_camera['saturation'] >,
+			'advanced': readonly(any)[],
+		}) 
+		transform( ): string
+		facing( ): string
+		aspect( ): number
+		size( ): number
+		width( ): ReturnType< $mol_video_camera['size'] >
+		height( ): ReturnType< $mol_video_camera['size'] >
+		brightness( ): number
+		sharpness( ): number
+		contrast( ): number
+		saturation( ): number
+		temperature( ): number
+		torch( ): boolean
+	}
+	
+}
+
+//# sourceMappingURL=camera.view.tree.d.ts.map
 declare namespace $.$$ {
     class $mol_video_camera extends $.$mol_video_camera {
         stream_raw(): MediaStream & {
@@ -1038,29 +1084,6 @@ declare namespace $.$$ {
         };
         dom_node_actual(): HTMLVideoElement;
         transform(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_link extends $mol_view {
-        uri(): string;
-        dom_name(): string;
-        uri_off(): string;
-        uri_native(): any;
-        external(): boolean;
-        attr(): Record<string, any>;
-        sub(): readonly $mol_view_content[];
-        arg(): Record<string, any>;
-        event(): Record<string, any>;
-        uri_toggle(): string;
-        hint(): string;
-        hint_safe(): string;
-        target(): string;
-        file_name(): string;
-        current(): boolean;
-        relation(): string;
-        event_click(event?: any): any;
-        click(event?: any): any;
     }
 }
 
@@ -1137,6 +1160,41 @@ declare namespace $ {
     function $mol_style_define<Component extends $mol_view, Config extends $mol_style_guard<Component, Config>>(Component: new () => Component, config: Config): HTMLStyleElement | null;
 }
 
+declare namespace $ {
+
+	export class $mol_link extends $mol_view {
+		uri( ): string
+		dom_name( ): string
+		uri_off( ): string
+		uri_native( ): any
+		external( ): boolean
+		attr( ): ({ 
+			'href': ReturnType< $mol_link['uri_toggle'] >,
+			'title': ReturnType< $mol_link['hint_safe'] >,
+			'target': ReturnType< $mol_link['target'] >,
+			'download': ReturnType< $mol_link['file_name'] >,
+			'mol_link_current': ReturnType< $mol_link['current'] >,
+			'rel': ReturnType< $mol_link['relation'] >,
+		})  & ReturnType< $mol_view['attr'] >
+		sub( ): readonly($mol_view_content)[]
+		arg( ): Record<string, any>
+		event( ): ({ 
+			click( next?: ReturnType< $mol_link['click'] > ): ReturnType< $mol_link['click'] >,
+		})  & ReturnType< $mol_view['event'] >
+		uri_toggle( ): string
+		hint( ): string
+		hint_safe( ): ReturnType< $mol_link['hint'] >
+		target( ): string
+		file_name( ): string
+		current( ): boolean
+		relation( ): string
+		event_click( next?: any ): any
+		click( next?: ReturnType< $mol_link['event_click'] > ): ReturnType< $mol_link['event_click'] >
+	}
+	
+}
+
+//# sourceMappingURL=link.view.tree.d.ts.map
 declare namespace $.$$ {
     class $mol_link extends $.$mol_link {
         uri_toggle(): string;
@@ -1274,22 +1332,25 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_svg extends $mol_view {
-        dom_name(): string;
-        dom_name_space(): string;
-        font_size(): number;
-        font_family(): string;
-        style_size(): Record<string, any>;
-    }
-}
-
-declare namespace $ {
     class $mol_state_time extends $mol_object {
         static task(precision: number, reset?: null): $mol_after_timeout | $mol_after_frame;
         static now(precision: number): number;
     }
 }
 
+declare namespace $ {
+
+	export class $mol_svg extends $mol_view {
+		dom_name( ): string
+		dom_name_space( ): string
+		font_size( ): number
+		font_family( ): string
+		style_size( ): Record<string, any>
+	}
+	
+}
+
+//# sourceMappingURL=svg.view.tree.d.ts.map
 declare namespace $.$$ {
     class $mol_svg extends $.$mol_svg {
         computed_style(): Record<string, any>;
@@ -1299,68 +1360,129 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_svg_root extends $mol_svg {
-        dom_name(): string;
-        attr(): Record<string, any>;
-        view_box(): string;
-        aspect(): string;
-    }
+}
+
+declare namespace $ {
+
+	export class $mol_svg_root extends $mol_svg {
+		dom_name( ): string
+		attr( ): ({ 
+			'viewBox': ReturnType< $mol_svg_root['view_box'] >,
+			'preserveAspectRatio': ReturnType< $mol_svg_root['aspect'] >,
+		})  & ReturnType< $mol_svg['attr'] >
+		view_box( ): string
+		aspect( ): string
+	}
+	
+}
+
+//# sourceMappingURL=root.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_svg_path extends $mol_svg {
+		dom_name( ): string
+		attr( ): ({ 
+			'd': ReturnType< $mol_svg_path['geometry'] >,
+		})  & ReturnType< $mol_svg['attr'] >
+		geometry( ): string
+	}
+	
+}
+
+//# sourceMappingURL=path.view.tree.d.ts.map
+declare namespace $ {
+    type $mol_type_enforce<Actual extends Expected, Expected> = Actual;
 }
 
 declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_svg_path extends $mol_svg {
-        dom_name(): string;
-        attr(): Record<string, any>;
-        geometry(): string;
-    }
+
+	type $mol_svg_path__geometry__7WV3KOVT = $mol_type_enforce<
+		ReturnType< $mol_icon['path'] >
+		,
+		ReturnType< $mol_svg_path['geometry'] >
+	>
+	export class $mol_icon extends $mol_svg_root {
+		view_box( ): string
+		minimal_width( ): number
+		minimal_height( ): number
+		sub( ): readonly(any)[]
+		path( ): string
+		Path( ): $mol_svg_path
+	}
+	
 }
 
+//# sourceMappingURL=icon.view.tree.d.ts.map
 declare namespace $ {
-    class $mol_icon extends $mol_svg_root {
-        view_box(): string;
-        minimal_width(): number;
-        minimal_height(): number;
-        sub(): readonly any[];
-        path(): string;
-        Path(): $mol_svg_path;
-    }
+
+	export class $mol_icon_script extends $mol_icon {
+		path( ): string
+	}
+	
 }
 
+//# sourceMappingURL=script.view.tree.d.ts.map
 declare namespace $ {
+
+	export class $mol_icon_script_text extends $mol_icon {
+		path( ): string
+	}
+	
 }
 
+//# sourceMappingURL=text.view.tree.d.ts.map
 declare namespace $ {
-    class $mol_icon_script extends $mol_icon {
-        path(): string;
-    }
+
+	export class $mol_link_source extends $mol_link {
+		hint( ): string
+		sub( ): readonly(any)[]
+		Icon( ): $mol_icon_script_text
+	}
+	
 }
 
+//# sourceMappingURL=source.view.tree.d.ts.map
 declare namespace $ {
-    class $mol_icon_script_text extends $mol_icon {
-        path(): string;
-    }
+
+	type $mol_video_camera__title__07E40F6C = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_video_camera['title'] >
+	>
+	type $mol_video_camera__facing__PX1JD9E6 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_video_camera['facing'] >
+	>
+	type $mol_video_camera__sharpness__MK2HUEKI = $mol_type_enforce<
+		number
+		,
+		ReturnType< $mol_video_camera['sharpness'] >
+	>
+	type $mol_video_camera__torch__DSNTOHGP = $mol_type_enforce<
+		boolean
+		,
+		ReturnType< $mol_video_camera['torch'] >
+	>
+	type $mol_link_source__uri__QNDA1BI8 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_link_source['uri'] >
+	>
+	export class $hyoo_lupa extends $mol_stack {
+		sub( ): readonly(any)[]
+		Camera( ): $mol_video_camera
+		Source( ): $mol_link_source
+	}
+	
 }
 
-declare namespace $ {
-    class $mol_link_source extends $mol_link {
-        hint(): string;
-        sub(): readonly any[];
-        Icon(): $mol_icon_script_text;
-    }
-}
-
-declare namespace $ {
-    class $hyoo_lupa extends $mol_stack {
-        sub(): readonly any[];
-        Camera(): $$.$mol_video_camera;
-        Source(): $mol_link_source;
-    }
-}
-
+//# sourceMappingURL=lupa.view.tree.d.ts.map
 declare namespace $.$$ {
 }
 
 export = $;
+//# sourceMappingURL=node.d.ts.map

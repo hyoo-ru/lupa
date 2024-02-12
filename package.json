@@ -142,7 +142,8 @@
     "$mol_svg_root",
     "$mol_svg",
     "$mol_state_time",
-    "$mol_svg_path"
+    "$mol_svg_path",
+    "$mol_type_enforce"
   ],
   "dependencies": {
     "jsdom": "*",
