@@ -85,158 +85,22 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    enum $mol_wire_cursor {
-        stale = -1,
-        doubt = -2,
-        fresh = -3,
-        final = -4
-    }
-}
-
-declare namespace $ {
-    class $mol_wire_pub extends Object {
-        data: unknown[];
-        static get [Symbol.species](): ArrayConstructor;
-        protected sub_from: number;
-        get sub_list(): readonly $mol_wire_sub[];
-        get sub_empty(): boolean;
-        sub_on(sub: $mol_wire_pub, pub_pos: number): number;
-        sub_off(sub_pos: number): void;
-        reap(): void;
-        promote(): void;
-        fresh(): void;
-        complete(): void;
-        get incompleted(): boolean;
-        emit(quant?: $mol_wire_cursor): void;
-        peer_move(from_pos: number, to_pos: number): void;
-        peer_repos(peer_pos: number, self_pos: number): void;
-    }
-}
-
-declare namespace $ {
-    interface $mol_wire_sub extends $mol_wire_pub {
-        temp: boolean;
-        track_on(): $mol_wire_sub | null;
-        track_next(pub?: $mol_wire_pub): $mol_wire_pub | null;
-        pub_off(pub_pos: number): void;
-        track_cut(sub: $mol_wire_pub | null): void;
-        track_off(sub: $mol_wire_pub | null): void;
-        absorb(quant: $mol_wire_cursor): void;
-        destructor(): void;
-    }
-}
-
-declare namespace $ {
-    let $mol_wire_auto_sub: $mol_wire_sub | null;
-    function $mol_wire_auto(next?: $mol_wire_sub | null): $mol_wire_sub | null;
-    const $mol_wire_affected: (number | $mol_wire_sub)[];
-}
-
-declare namespace $ {
-    function $mol_dev_format_register(config: {
-        header: (val: any, config: any) => any;
-        hasBody: (val: any, config: any) => false;
-    } | {
-        header: (val: any, config: any) => any;
-        hasBody: (val: any, config: any) => boolean;
-        body: (val: any, config: any) => any;
-    }): void;
-    let $mol_dev_format_head: symbol;
-    let $mol_dev_format_body: symbol;
-    function $mol_dev_format_native(obj: any): any[];
-    function $mol_dev_format_auto(obj: any): any[];
-    function $mol_dev_format_element(element: string, style: object, ...content: any[]): any[];
-    function $mol_dev_format_span(style: object, ...content: any[]): any[];
-    let $mol_dev_format_div: (style: object, ...content: any[]) => any[];
-    let $mol_dev_format_ol: (style: object, ...content: any[]) => any[];
-    let $mol_dev_format_li: (style: object, ...content: any[]) => any[];
-    let $mol_dev_format_table: (style: object, ...content: any[]) => any[];
-    let $mol_dev_format_tr: (style: object, ...content: any[]) => any[];
-    let $mol_dev_format_td: (style: object, ...content: any[]) => any[];
-    let $mol_dev_format_accent: (...args: any[]) => any[];
-    let $mol_dev_format_strong: (...args: any[]) => any[];
-    let $mol_dev_format_string: (...args: any[]) => any[];
-    let $mol_dev_format_shade: (...args: any[]) => any[];
-    let $mol_dev_format_indent: (...args: any[]) => any[];
-}
-
-declare namespace $ {
-    class $mol_wire_pub_sub extends $mol_wire_pub implements $mol_wire_sub {
-        protected pub_from: number;
-        protected cursor: $mol_wire_cursor;
-        get temp(): boolean;
-        get pub_list(): $mol_wire_pub[];
-        track_on(): $mol_wire_sub | null;
-        promote(): void;
-        track_next(pub?: $mol_wire_pub): $mol_wire_pub | null;
-        track_off(sub: $mol_wire_sub | null): void;
-        pub_off(sub_pos: number): void;
-        destructor(): void;
-        track_cut(): void;
-        complete(): void;
-        complete_pubs(): void;
-        absorb(quant?: $mol_wire_cursor): void;
-        get pub_empty(): boolean;
-    }
-}
-
-declare namespace $ {
-    class $mol_after_timeout extends $mol_object2 {
-        delay: number;
-        task: () => void;
-        id: any;
-        constructor(delay: number, task: () => void);
-        destructor(): void;
-    }
-}
-
-declare namespace $ {
-    class $mol_after_frame extends $mol_after_timeout {
-        task: () => void;
-        constructor(task: () => void);
-    }
-}
-
-declare namespace $ {
     function $mol_promise_like(val: any): val is Promise<any>;
 }
 
 declare namespace $ {
-    abstract class $mol_wire_fiber<Host, Args extends readonly unknown[], Result> extends $mol_wire_pub_sub {
-        readonly task: (this: Host, ...args: Args) => Result;
-        readonly host?: Host | undefined;
-        static warm: boolean;
-        static planning: Set<$mol_wire_fiber<any, any, any>>;
-        static reaping: Set<$mol_wire_fiber<any, any, any>>;
-        static plan_task: $mol_after_frame | null;
-        static plan(): void;
-        static sync(): void;
-        [Symbol.toStringTag]: string;
-        cache: Result | Error | Promise<Result | Error>;
-        get args(): Args;
-        result(): Result | undefined;
-        get incompleted(): boolean;
-        field(): string;
-        constructor(id: string, task: (this: Host, ...args: Args) => Result, host?: Host | undefined, args?: Args);
-        plan(): void;
-        reap(): void;
-        toString(): string;
-        toJSON(): string;
-        get $(): any;
-        emit(quant?: $mol_wire_cursor): void;
-        fresh(): void;
-        refresh(): void;
-        abstract put(next: Result | Error | Promise<Result | Error>): Result | Error | Promise<Result | Error>;
-        sync(): Awaited<Result>;
-        async(): Promise<Result>;
-        step(): Promise<null>;
-    }
+    function $mol_fail_catch(error: unknown): boolean;
 }
 
 declare namespace $ {
-    let $mol_compare_deep_cache: WeakMap<any, WeakMap<any, boolean>>;
-    function $mol_compare_deep<Value>(left: Value, right: Value): boolean;
+    function $mol_fail_log(error: unknown): boolean;
 }
+
+interface $node {
+    [key: string]: any;
+}
+declare var $node: $node;
+declare const cache: Map<string, any>;
 
 declare namespace $ {
     type $mol_log3_event<Fields> = {
@@ -376,40 +240,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_wire_task<Host, Args extends readonly unknown[], Result> extends $mol_wire_fiber<Host, Args, Result> {
-        static getter<Host, Args extends readonly unknown[], Result>(task: (this: Host, ...args: Args) => Result): (host: Host, args: Args) => $mol_wire_task<Host, Args, Result>;
-        get temp(): boolean;
-        complete(): void;
-        put(next: Result | Error | Promise<Result | Error>): Error | Result | Promise<Error | Result>;
-    }
-}
-
-declare namespace $ {
-    export function $mol_wire_sync<Host extends object>(obj: Host): ObjectOrFunctionResultAwaited<Host>;
-    type FunctionResultAwaited<Some> = Some extends (...args: infer Args) => infer Res ? (...args: Args) => Awaited<Res> : Some;
-    type MethodsResultAwaited<Host extends Object> = {
-        [K in keyof Host]: FunctionResultAwaited<Host[K]>;
-    };
-    type ObjectOrFunctionResultAwaited<Some> = (Some extends (...args: any) => unknown ? FunctionResultAwaited<Some> : {}) & (Some extends Object ? MethodsResultAwaited<Some> : Some);
-    export {};
-}
-
-declare namespace $ {
-    function $mol_fail_catch(error: unknown): boolean;
-}
-
-declare namespace $ {
-    function $mol_fail_log(error: unknown): boolean;
-}
-
-interface $node {
-    [key: string]: any;
-}
-declare var $node: $node;
-declare const importAsync: (uri: string) => Promise<any>;
-declare const importSync: ((uri: string) => any) & {};
-
-declare namespace $ {
     function $mol_env(): Record<string, string | undefined>;
 }
 
@@ -465,12 +295,171 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    enum $mol_wire_cursor {
+        stale = -1,
+        doubt = -2,
+        fresh = -3,
+        final = -4
+    }
+}
+
+declare namespace $ {
+    class $mol_wire_pub extends Object {
+        data: unknown[];
+        static get [Symbol.species](): ArrayConstructor;
+        protected sub_from: number;
+        get sub_list(): readonly $mol_wire_sub[];
+        get sub_empty(): boolean;
+        sub_on(sub: $mol_wire_pub, pub_pos: number): number;
+        sub_off(sub_pos: number): void;
+        reap(): void;
+        promote(): void;
+        fresh(): void;
+        complete(): void;
+        get incompleted(): boolean;
+        emit(quant?: $mol_wire_cursor): void;
+        peer_move(from_pos: number, to_pos: number): void;
+        peer_repos(peer_pos: number, self_pos: number): void;
+    }
+}
+
+declare namespace $ {
+    interface $mol_wire_sub extends $mol_wire_pub {
+        temp: boolean;
+        track_on(): $mol_wire_sub | null;
+        track_next(pub?: $mol_wire_pub): $mol_wire_pub | null;
+        pub_off(pub_pos: number): void;
+        track_cut(sub: $mol_wire_pub | null): void;
+        track_off(sub: $mol_wire_pub | null): void;
+        absorb(quant: $mol_wire_cursor): void;
+        destructor(): void;
+    }
+}
+
+declare namespace $ {
+    let $mol_wire_auto_sub: $mol_wire_sub | null;
+    function $mol_wire_auto(next?: $mol_wire_sub | null): $mol_wire_sub | null;
+    const $mol_wire_affected: (number | $mol_wire_sub)[];
+}
+
+declare namespace $ {
+    function $mol_dev_format_register(config: {
+        header: (val: any, config: any) => any;
+        hasBody: (val: any, config: any) => false;
+    } | {
+        header: (val: any, config: any) => any;
+        hasBody: (val: any, config: any) => boolean;
+        body: (val: any, config: any) => any;
+    }): void;
+    let $mol_dev_format_head: symbol;
+    let $mol_dev_format_body: symbol;
+    function $mol_dev_format_native(obj: any): any[];
+    function $mol_dev_format_auto(obj: any): any[];
+    function $mol_dev_format_element(element: string, style: object, ...content: any[]): any[];
+    function $mol_dev_format_span(style: object, ...content: any[]): any[];
+    let $mol_dev_format_div: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_ol: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_li: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_table: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_tr: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_td: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_accent: (...args: any[]) => any[];
+    let $mol_dev_format_strong: (...args: any[]) => any[];
+    let $mol_dev_format_string: (...args: any[]) => any[];
+    let $mol_dev_format_shade: (...args: any[]) => any[];
+    let $mol_dev_format_indent: (...args: any[]) => any[];
+}
+
+declare namespace $ {
+    class $mol_wire_pub_sub extends $mol_wire_pub implements $mol_wire_sub {
+        protected pub_from: number;
+        protected cursor: $mol_wire_cursor;
+        get temp(): boolean;
+        get pub_list(): $mol_wire_pub[];
+        track_on(): $mol_wire_sub | null;
+        promote(): void;
+        track_next(pub?: $mol_wire_pub): $mol_wire_pub | null;
+        track_off(sub: $mol_wire_sub | null): void;
+        pub_off(sub_pos: number): void;
+        destructor(): void;
+        track_cut(): void;
+        complete(): void;
+        complete_pubs(): void;
+        absorb(quant?: $mol_wire_cursor): void;
+        get pub_empty(): boolean;
+    }
+}
+
+declare namespace $ {
+    class $mol_after_timeout extends $mol_object2 {
+        delay: number;
+        task: () => void;
+        id: any;
+        constructor(delay: number, task: () => void);
+        destructor(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_after_frame extends $mol_after_timeout {
+        task: () => void;
+        constructor(task: () => void);
+    }
+}
+
+declare namespace $ {
+    abstract class $mol_wire_fiber<Host, Args extends readonly unknown[], Result> extends $mol_wire_pub_sub {
+        readonly task: (this: Host, ...args: Args) => Result;
+        readonly host?: Host | undefined;
+        static warm: boolean;
+        static planning: Set<$mol_wire_fiber<any, any, any>>;
+        static reaping: Set<$mol_wire_fiber<any, any, any>>;
+        static plan_task: $mol_after_frame | null;
+        static plan(): void;
+        static sync(): void;
+        [Symbol.toStringTag]: string;
+        cache: Result | Error | Promise<Result | Error>;
+        get args(): Args;
+        result(): Result | undefined;
+        get incompleted(): boolean;
+        field(): string;
+        constructor(id: string, task: (this: Host, ...args: Args) => Result, host?: Host | undefined, args?: Args);
+        plan(): void;
+        reap(): void;
+        toString(): string;
+        toJSON(): string;
+        get $(): any;
+        emit(quant?: $mol_wire_cursor): void;
+        fresh(): void;
+        refresh(): void;
+        abstract put(next: Result | Error | Promise<Result | Error>): Result | Error | Promise<Result | Error>;
+        sync(): Awaited<Result>;
+        async(): Promise<Result>;
+        step(): Promise<null>;
+    }
+}
+
+declare namespace $ {
     function $mol_guid(length?: number, exists?: (id: string) => boolean): string;
 }
 
 declare namespace $ {
     const $mol_key_store: WeakMap<object, string>;
     function $mol_key<Value>(value: Value): string;
+}
+
+declare namespace $ {
+    let $mol_compare_deep_cache: WeakMap<any, WeakMap<any, boolean>>;
+    function $mol_compare_deep<Value>(left: Value, right: Value): boolean;
+}
+
+declare namespace $ {
+    class $mol_wire_task<Host, Args extends readonly unknown[], Result> extends $mol_wire_fiber<Host, Args, Result> {
+        static getter<Host, Args extends readonly unknown[], Result>(task: (this: Host, ...args: Args) => Result): (host: Host, args: Args) => $mol_wire_task<Host, Args, Result>;
+        get temp(): boolean;
+        complete(): void;
+        put(next: Result | Error | Promise<Result | Error>): Error | Result | Promise<Error | Result>;
+    }
 }
 
 declare namespace $ {
@@ -1035,6 +1024,16 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    export function $mol_wire_sync<Host extends object>(obj: Host): ObjectOrFunctionResultAwaited<Host>;
+    type FunctionResultAwaited<Some> = Some extends (...args: infer Args) => infer Res ? (...args: Args) => Awaited<Res> : Some;
+    type MethodsResultAwaited<Host extends Object> = {
+        [K in keyof Host]: FunctionResultAwaited<Host[K]>;
+    };
+    type ObjectOrFunctionResultAwaited<Some> = (Some extends (...args: any) => unknown ? FunctionResultAwaited<Some> : {}) & (Some extends Object ? MethodsResultAwaited<Some> : Some);
+    export {};
+}
+
+declare namespace $ {
 
 	export class $mol_video_camera extends $mol_video_player {
 		transform( ): string
@@ -1282,7 +1281,7 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_svg_path__geometry__MRUVHDNP = $mol_type_enforce<
+	type $mol_svg_path__geometry__32XSV4M5 = $mol_type_enforce<
 		ReturnType< $mol_icon['path'] >
 		,
 		ReturnType< $mol_svg_path['geometry'] >
@@ -1469,27 +1468,27 @@ declare namespace $ {
 //# sourceMappingURL=source.view.tree.d.ts.map
 declare namespace $ {
 
-	type $mol_video_camera__title__9EM2TVB0 = $mol_type_enforce<
+	type $mol_video_camera__title__GIT46CHP = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_video_camera['title'] >
 	>
-	type $mol_video_camera__facing__U9SAC920 = $mol_type_enforce<
+	type $mol_video_camera__facing__9XO7K4FK = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_video_camera['facing'] >
 	>
-	type $mol_video_camera__sharpness__NF7ODZSZ = $mol_type_enforce<
+	type $mol_video_camera__sharpness__QC5Q22OJ = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_video_camera['sharpness'] >
 	>
-	type $mol_video_camera__torch__HQTKLG8N = $mol_type_enforce<
+	type $mol_video_camera__torch__REGL6QJ8 = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_video_camera['torch'] >
 	>
-	type $mol_link_source__uri__I9T003OD = $mol_type_enforce<
+	type $mol_link_source__uri__C19C53WW = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_link_source['uri'] >
