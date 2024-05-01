@@ -263,17 +263,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_after_tick extends $mol_object2 {
-        task: () => void;
-        promise: any;
-        cancelled: boolean;
-        constructor(task: () => void);
-        destructor(): void;
-    }
-}
-
-declare namespace $ {
-    function $mol_style_attach_force(): HTMLStyleElement;
     function $mol_style_attach(id: string, text: string): HTMLStyleElement | null;
 }
 
@@ -391,19 +380,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_after_timeout extends $mol_object2 {
-        delay: number;
+    class $mol_after_tick extends $mol_object2 {
         task: () => void;
-        id: any;
-        constructor(delay: number, task: () => void);
-        destructor(): void;
-    }
-}
-
-declare namespace $ {
-    class $mol_after_frame extends $mol_after_timeout {
-        task: () => void;
+        promise: any;
+        cancelled: boolean;
         constructor(task: () => void);
+        destructor(): void;
     }
 }
 
@@ -414,7 +396,7 @@ declare namespace $ {
         static warm: boolean;
         static planning: Set<$mol_wire_fiber<any, any, any>>;
         static reaping: Set<$mol_wire_fiber<any, any, any>>;
-        static plan_task: $mol_after_frame | null;
+        static plan_task: $mol_after_tick | null;
         static plan(): void;
         static sync(): void;
         [Symbol.toStringTag]: string;
@@ -446,6 +428,23 @@ declare namespace $ {
 declare namespace $ {
     const $mol_key_store: WeakMap<object, string>;
     function $mol_key<Value>(value: Value): string;
+}
+
+declare namespace $ {
+    class $mol_after_timeout extends $mol_object2 {
+        delay: number;
+        task: () => void;
+        id: any;
+        constructor(delay: number, task: () => void);
+        destructor(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_after_frame extends $mol_after_timeout {
+        task: () => void;
+        constructor(task: () => void);
+    }
 }
 
 declare namespace $ {
@@ -1292,7 +1291,7 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_svg_path__geometry__KYX3469B = $mol_type_enforce<
+	type $mol_svg_path__geometry__HZXA8E8G = $mol_type_enforce<
 		ReturnType< $mol_icon['path'] >
 		,
 		ReturnType< $mol_svg_path['geometry'] >
@@ -1479,27 +1478,27 @@ declare namespace $ {
 //# sourceMappingURL=source.view.tree.d.ts.map
 declare namespace $ {
 
-	type $mol_video_camera__title__5IGAYS0N = $mol_type_enforce<
+	type $mol_video_camera__title__CH9SJKKC = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_video_camera['title'] >
 	>
-	type $mol_video_camera__facing__4K4SH9SR = $mol_type_enforce<
+	type $mol_video_camera__facing__39GAQ2DS = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_video_camera['facing'] >
 	>
-	type $mol_video_camera__sharpness__60MPHOAF = $mol_type_enforce<
+	type $mol_video_camera__sharpness__7M7WQ9RT = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_video_camera['sharpness'] >
 	>
-	type $mol_video_camera__torch__N40EB6VI = $mol_type_enforce<
+	type $mol_video_camera__torch__GW9HDVRY = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_video_camera['torch'] >
 	>
-	type $mol_link_source__uri__2X6ZHHGO = $mol_type_enforce<
+	type $mol_link_source__uri__OTIHVFR7 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_link_source['uri'] >
