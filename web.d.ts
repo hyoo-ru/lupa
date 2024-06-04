@@ -270,13 +270,13 @@ declare namespace $ {
         get incompleted(): boolean;
         field(): string;
         constructor(id: string, task: (this: Host, ...args: Args) => Result, host?: Host | undefined, args?: Args);
-        plan(): void;
+        plan(): this;
         reap(): void;
         toString(): string;
         toJSON(): string;
         get $(): any;
         emit(quant?: $mol_wire_cursor): void;
-        fresh(): void;
+        fresh(): this | undefined;
         refresh(): void;
         abstract put(next: Result | Error | Promise<Result | Error>): Result | Error | Promise<Result | Error>;
         sync(): Awaited<Result>;
@@ -1190,7 +1190,7 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_svg_path__geometry__98VLCZO4 = $mol_type_enforce<
+	type $mol_svg_path__geometry__45QAV3XY = $mol_type_enforce<
 		ReturnType< $mol_icon['path'] >
 		,
 		ReturnType< $mol_svg_path['geometry'] >
@@ -1396,27 +1396,27 @@ declare namespace $ {
 //# sourceMappingURL=source.view.tree.d.ts.map
 declare namespace $ {
 
-	type $mol_video_camera__title__SONWD4GP = $mol_type_enforce<
+	type $mol_video_camera__title__0O8364TO = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_video_camera['title'] >
 	>
-	type $mol_video_camera__facing__EE22GFZJ = $mol_type_enforce<
+	type $mol_video_camera__facing__K32UB5W2 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_video_camera['facing'] >
 	>
-	type $mol_video_camera__sharpness__7J60HOZZ = $mol_type_enforce<
+	type $mol_video_camera__sharpness__EILGA0Z6 = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_video_camera['sharpness'] >
 	>
-	type $mol_video_camera__torch__S73CPMGO = $mol_type_enforce<
+	type $mol_video_camera__torch__8DLKTJTK = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_video_camera['torch'] >
 	>
-	type $mol_link_source__uri__DUWUSS5G = $mol_type_enforce<
+	type $mol_link_source__uri__UF1YZ5IG = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_link_source['uri'] >
