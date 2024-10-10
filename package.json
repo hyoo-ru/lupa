@@ -127,6 +127,7 @@
     "$mol_style_pseudo",
     "$mol_type_error",
     "$mol_style_sheet",
+    "$mol_icon_script_text",
     "$mol_icon_script",
     "$mol_icon",
     "$mol_svg_root",
