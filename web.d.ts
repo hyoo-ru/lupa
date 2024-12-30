@@ -125,6 +125,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    var $mol_dom: typeof globalThis;
+}
+
+declare namespace $ {
     class $mol_vk extends $mol_object2 {
         static init(): void;
         static send(handler: string, params?: Record<string, any>): void;

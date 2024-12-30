@@ -1951,6 +1951,13 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    $.$mol_dom = $mol_dom_context;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_vk extends $mol_object2 {
         static init() {
             this.send('VKWebAppInit');
